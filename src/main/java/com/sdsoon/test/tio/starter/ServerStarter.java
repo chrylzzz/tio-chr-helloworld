@@ -33,7 +33,14 @@ public class ServerStarter {
     //port：监听的端口
     public static int serverPort = TcpConfig.PORT;
 
+    //调用
+    public static void start() throws IOException {
+        //设置心跳时间
+        serverGroupContext.setHeartbeatTimeout(TcpConfig.TimeOut);
 
+        //监听，启动
+        tioServer.start(serverIp,serverPort);
+    }
     /**
      * 启动
      */
