@@ -1,6 +1,8 @@
 package com.sdsoon.test.tio.server;
 
+import com.alibaba.fastjson.JSON;
 import com.sdsoon.test.tio.bean.RequestPacket;
+import com.sdsoon.test.tio.bean.TestBean;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.Tio;
@@ -121,11 +123,19 @@ public class ServerHandler implements ServerAioHandler {
 
             String s = new String(body, RequestPacket.CHARSET);
             System.err.println(" 服务端接受的数据是" + s);
-            //服务端  回执 客户端
-            RequestPacket reRequestPacket = new RequestPacket();
-            reRequestPacket.setBody(("我已经收到消息=====" + s + "======啦").getBytes());
-            //发送给client
-            Tio.send(channelContext, reRequestPacket);
+
+            try {
+                TestBean testBean = JSON.parseObject(s, TestBean.class);
+                System.err.println(testBean.getTimel());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+//服务端  回执 客户端
+                RequestPacket reRequestPacket = new RequestPacket();
+                reRequestPacket.setBody(("我已经收到消息=====" + s + "======啦").getBytes());
+                //发送给client
+                Tio.send(channelContext, reRequestPacket);
+            }
         }
         return;
 
