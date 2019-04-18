@@ -130,7 +130,7 @@ public class ServerHandler implements ServerAioHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-//服务端  回执 客户端
+                //服务端  回执 客户端
                 RequestPacket reRequestPacket = new RequestPacket();
                 reRequestPacket.setBody(("我已经收到消息=====" + s + "======啦").getBytes());
                 //发送给client
